@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic Box with Buttons</title>
+    <li><a href="../public/index.html">Home</a></li>
+  </head>
+  <body>
+    <script>
+      // Function to create the box with buttons
+      function createBoxWithButtons() {
+        const box = document.createElement("div");
+        box.style.border = "1px solid #ccc";
+        box.style.padding = "20px";
+        box.style.textAlign = "center";
+
+        const title = document.createElement("h2");
+        title.textContent = "How are you feeling today?";
+
+        const buttonContainer = document.createElement("div");
+
+        const emoji = ["☹️", "🙁", "😐", "🙂", "😁"];
+
+        for (let i = 0; i <= 4; i++) {
+          const button = document.createElement("button");
+          button.textContent = emoji[i];
+          button.style.fontSize = "48px";
+          button.addEventListener("click", () => handleClick(i));
+          buttonContainer.appendChild(button);
+        }
+
+        box.appendChild(title);
+        box.appendChild(buttonContainer);
+
+        // Append the box to the body or another container element
+        document.body.appendChild(box);
+      }
+
+      // Function to handle button clicks
+      function handleClick(buttonNumber) {
+        console.log(`Button ${buttonNumber} clicked`);
+        location.href = "../public/surveyconf.html";
+
+        // You can add more logic here based on the button click
+      }
+
+      // Call the function to create the box with buttons
+      createBoxWithButtons();
+    </script>
+  </body>
+</html>

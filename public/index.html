@@ -99,7 +99,7 @@
       <h2>Welcome <span id="loggedInUsername"></span>!</h2>
       <p>Choose an option:</p>
       <ul>
-        <li><a href="#" onclick="openLink('link1')">Link 1</a></li>
+        <li><a href="#" onclick="openLink('survey')">Daily Check-in</a></li>
         <li><a href="/public/therapistConnect.html" onclick="openLink('link2')">I need help! Therapist Please!!</a></li>
         <li><a href="#" onclick="openLink('link3')">Link 3</a></li>
       </ul>
@@ -124,6 +124,12 @@
         // You can handle the logic for each link here
         // For now, let's just log the selected link to the console
         console.log("Opening " + link);
+        if (link == "survey") {
+          location.href = "../public/survey.html";
+        }
+        if (link == "home") {
+          location.href = "../public/index.html";
+        }
       }
     </script>
   </body>
