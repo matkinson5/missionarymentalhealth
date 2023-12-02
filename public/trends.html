@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Trends</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin: 50px;
+        background-color: #f8f9fa;
+      }
+
+      table {
+        width: 50%;
+        margin-right: 20px;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+        white-space: nowrap; /* Prevent text wrapping */
+        overflow: hidden; /* Hide overflow content */
+        text-overflow: ellipsis; /* Display ellipsis (...) for overflow text */
+      }
+
+      th {
+        background-color: #007bff;
+        color: white;
+      }
+
+      canvas {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="trendsTableBody"></tbody>
+    </table>
+
+    <canvas id="lineGraph" width="400" height="300"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var tableBody = document.getElementById("trendsTableBody");
+        var emojis = ["☹️", "🙁", "😐", "🙂", "😁", "😐", "🙂"];
+        var currentDate = new Date("December 10, 2023");
+        var endDate = new Date("December 16, 2023");
+
+        var labels = [];
+        var data = [];
+
+        while (currentDate <= endDate) {
+          var row = document.createElement("tr");
+          var dateCell = document.createElement("td");
+          var statusCell = document.createElement("td");
+
+          dateCell.textContent = formatDate(currentDate);
+          statusCell.textContent = getRandomEmoji(emojis);
+
+          row.appendChild(dateCell);
+          row.appendChild(statusCell);
+          tableBody.appendChild(row);
+
+          // Set max width based on content length
+          dateCell.style.width = dateCell.scrollWidth + "px";
+
+          labels.push(formatDate(currentDate, true));
+          data.push(emojis.indexOf(statusCell.textContent) + 1);
+
+          currentDate.setDate(currentDate.getDate() + 1);
+        }
+
+        var ctx = document.getElementById("lineGraph").getContext("2d");
+        var lineGraph = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Status",
+                borderColor: "blue",
+                data: data,
+                fill: false,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              x: {
+                type: "category",
+                labels: labels,
+              },
+              y: {
+                min: 0,
+                max: 6,
+                ticks: {
+                  stepSize: 1,
+                  callback: function (value, index, values) {
+                    return emojis[value - 1];
+                  },
+                },
+              },
+            },
+            legend: {
+              display: false, // Hide legend
+            },
+          },
+        });
+      });
+
+      function formatDate(date, removeYear = false) {
+        var options = { month: "long", day: "numeric" };
+        if (!removeYear) {
+          options.year = "numeric";
+        }
+        return new Intl.DateTimeFormat("en-US", options).format(date);
+      }
+
+      function getRandomEmoji(emojis) {
+        var randomIndex = Math.floor(Math.random() * emojis.length);
+        return emojis[randomIndex];
+      }
+    </script>
+  </body>
+</html>
