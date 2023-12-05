@@ -15,9 +15,15 @@
         background-color: #f8f9fa;
       }
 
+      .container {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 10px;
+      }
+
       table {
-        width: 50%;
-        margin-right: 20px;
+        max-width: 40%;
+        margin-right: 0px;
         border-collapse: collapse;
       }
 
@@ -39,21 +45,24 @@
       canvas {
         border: 1px solid #ddd;
         border-radius: 8px;
+        max-width: 60%;
       }
     </style>
   </head>
   <body>
-    <table>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody id="trendsTableBody"></tbody>
-    </table>
+    <div class="container">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>State</th>
+          </tr>
+        </thead>
+        <tbody id="trendsTableBody"></tbody>
+      </table>
 
-    <canvas id="lineGraph" width="400" height="300"></canvas>
+      <canvas id="lineGraph"></canvas>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
@@ -94,7 +103,7 @@
             labels: labels,
             datasets: [
               {
-                label: "Status",
+                label: "State",
                 borderColor: "blue",
                 data: data,
                 fill: false,
